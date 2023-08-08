@@ -8,7 +8,7 @@ using Core.Entities;
 
 namespace API.Helpers {
     public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string> {
-        public IConfiguration _config { get; }
+        private IConfiguration _config { get; }
         public ProductUrlResolver(IConfiguration config) {
             _config = config;
         }
