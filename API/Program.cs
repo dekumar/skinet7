@@ -18,12 +18,13 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 app.UseSwagger();
+
 app.UseSwaggerUI();
 
-//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");

@@ -36,7 +36,7 @@ namespace API.Controllers {
             var spec = new ProductWithTypesAndBrandsSpecification(productParams);
             var countSpec = new ProductWithFiltersForCountSpecification(productParams);
             var totalItems = await _productRepo.CountAsync(countSpec);
-            var products = await _productRepo.ListAsync(countSpec);
+            var products = await _productRepo.ListAsync(spec);
             var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
 
             return Ok(new Pagination<ProductToReturnDto>(
@@ -54,31 +54,15 @@ namespace API.Controllers {
             if (product == null) return NotFound(new ApiResponse(404));
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
-            // return new ProductToReturnDto{
-            //     Id = product.Id,
-            //     Name=product.Name,
-            //     Price=product.Price,
-            //     PictureUrl=product.PictureUrl,
-            //     ProductBrand=product.ProductBrand.Name,
-            //     ProductType=product.ProductType.Name,                
-            // };
-            //using DTO to return data
-
         }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands() {
-            //return Ok(await _repository.GetProductBrandsAsync());
-
-            //using generic repo
             return Ok(await _productBrandRepo.ListAllAsync());
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes() {
-            //return Ok(await _repository.GetProductTypesAsync());
-
-            //using generic repo
             return Ok(await _productTypeRepo.ListAllAsync());
         }
     }
